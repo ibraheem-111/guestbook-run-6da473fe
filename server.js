@@ -42,6 +42,28 @@ app.get('/api/entries', async (_req, res) => {
   }
 });
 
+app.post('/api/entries', async (req, res) => {
+  try {
+    const { name, message, honeypot } = req.body;
+
+    const { data, error } = await supabase
+      .from('guestbook_entries')
+      .insert([{ name, message, honeypot }])
+      .select('id, name, message, created_at')
+      .single();
+
+    if (error) {
+      console.error('Supabase error:', error);
+      return res.status(500).json({ error: 'Database error' });
+    }
+
+    res.status(201).json(data);
+  } catch (err) {
+    console.error('Server error:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // SPA catch-all
 app.get('*', (_req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
