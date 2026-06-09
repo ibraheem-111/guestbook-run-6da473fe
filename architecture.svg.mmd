@@ -1,0 +1,10 @@
+graph TD
+  U["Visitor / Browser"]
+  R["railway-web<br/>Node.js/Express<br/>(frontend + API)"]
+  S["supabase-db<br/>PostgreSQL<br/>guestbook_entries"]
+
+  U -->|"GET /"| R
+  U -->|"GET /api/entries"| R
+  U -->|"POST /api/entries"| R
+  R -->|"SELECT ... ORDER BY created_at DESC"| S
+  R -->|"INSERT INTO guestbook_entries"| S
