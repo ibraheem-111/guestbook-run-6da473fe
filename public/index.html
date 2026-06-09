@@ -4,12 +4,51 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Guestbook</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="app">
-    <h1>Guestbook</h1>
-    <p>Coming soon...</p>
+  <div class="container">
+    <header>
+      <h1>Guestbook</h1>
+      <p class="subtitle">Leave a message for the next visitor</p>
+    </header>
+
+    <form id="guestbook-form" novalidate>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" maxlength="100" required placeholder="Your name" />
+        <span class="error" id="name-error" aria-live="polite"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" maxlength="500" required placeholder="Your message" rows="4"></textarea>
+        <div class="textarea-meta">
+          <span class="error" id="message-error" aria-live="polite"></span>
+          <span class="char-count" id="char-count">0 / 500</span>
+        </div>
+      </div>
+
+      <!-- Honeypot field -->
+      <div class="form-group honeypot" aria-hidden="true">
+        <label for="website">Website</label>
+        <input type="text" id="website" name="honeypot" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <button type="submit" class="submit-btn">Submit</button>
+    </form>
+
+    <section class="entries-section" aria-label="Guestbook entries">
+      <div id="entries-list" class="entries-list"></div>
+      <div id="empty-state" class="empty-state" role="status">
+        <p>No entries yet. Be the first to sign!</p>
+      </div>
+    </section>
   </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
